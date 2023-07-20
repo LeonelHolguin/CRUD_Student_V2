@@ -1,7 +1,11 @@
+using CRUDTwoApi.Client.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ICareerService, CareerService>();
 
 var app = builder.Build();
 

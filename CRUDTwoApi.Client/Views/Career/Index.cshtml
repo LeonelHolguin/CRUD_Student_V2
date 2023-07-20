@@ -1,0 +1,43 @@
+﻿@model List<CRUDTwoApi.Shared.CareerDTO>
+@{
+    ViewData["Title"] = "Career Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Careers List</h1>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        Table of Careers
+    </div>
+
+    <div class="card-body">
+        <a asp-action="Details" asp-controller="Career" asp-route-id="0" class="btn btn-success">New Career</a>
+        <hr />
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.CareerName</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Career" asp-route-id="@item.CareerId" class="btn btn-primary">Edit</a>
+                            <a asp-action="Delete" asp-controller="Career" asp-route-id="@item.CareerId" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

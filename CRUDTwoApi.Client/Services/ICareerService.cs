@@ -4,7 +4,7 @@ namespace CRUDTwoApi.Client.Services
 {
     public interface ICareerService
     {
-        Task<List<CareerDTO>> GetAllCareer();
+        Task<List<CareerDTO>> GetAllCareers();
         Task<CareerDTO> GetCareer(int id);
         Task<bool> InsertCareer(CareerDTO career);
         Task<bool> UpdateCareer(CareerDTO career);

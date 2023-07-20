@@ -1,0 +1,51 @@
+﻿@model CRUDTwoApi.Shared.StudentDTO
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Details</h1>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        Details of Student
+    </div>
+
+    <div class="card-body">
+        <form asp-action="SaveChanges" asp-controller="Student" method="post">
+            <input asp-for="StudentId"  type="hidden"/>
+
+            <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control form-control-sm" asp-for="StudentFirstName"/>
+                <span asp-validation-for="StudentFirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control form-control-sm" asp-for="StudentLastName" />
+                <span asp-validation-for="StudentLastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Career</label>
+                <select class="form-select form-select-sm" asp-items="@(new SelectList(Model.CareerList, "CareerId", "CareerName"))" asp-for="StudentCareerId">
+                    <option value="0">-- Seletec --</option>
+                </select>
+                <span asp-validation-for="StudentCareerId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Admission Date</label>
+                <input type="date" class="form-control form-control-sm" asp-for="StudentAdmissionDate" />
+                <span asp-validation-for="StudentAdmissionDate" class="text-danger"></span>
+            </div>
+
+            <input asp-for="RegisterDate" type="hidden" />
+
+            <button type="submit" class="btn btn-success">Save</button>
+            <a asp-action="Index" asp-controller="Student" class="btn btn-secondary">Cancel</a>
+
+        </form>
+    </div>
+</div>

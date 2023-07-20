@@ -1,5 +1,6 @@
 ﻿using CRUDTwoApi.Shared;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace CRUDTwoApi.Client.Services
 {
@@ -14,46 +15,57 @@ namespace CRUDTwoApi.Client.Services
             _Client.BaseAddress = BaseAddress;
         }
 
-        public async Task<List<CareerDTO>> GetAllCareer()
+        public async Task<List<CareerDTO>> GetAllCareers()
         {
             List<CareerDTO> CareerList = new List<CareerDTO>();
 
-            var response = await _Client.GetAsync(_Client.BaseAddress + "/Get");
+            var result = await _Client.GetFromJsonAsync<List<CareerDTO>>(_Client.BaseAddress + "/Get");
 
-            if(response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<CareerDTO>>(json);
-
+            if(result != null)
                 CareerList = result!;
-            }
 
             return CareerList;
         }
 
-        public Task<CareerDTO> GetCareer(int id)
+        public async Task<CareerDTO> GetCareer(int id)
         {
-            throw new NotImplementedException();
+            CareerDTO Career = new CareerDTO();
+
+            var result = await _Client.GetFromJsonAsync<CareerDTO>(_Client.BaseAddress + $"/Get/{id}");
+
+            if (result != null)
+                Career = result!;
+
+            return Career;
         }
 
-        public Task<bool> InsertCareer(CareerDTO career)
+        public async Task<bool> InsertCareer(CareerDTO career)
         {
-            throw new NotImplementedException();
+            var response = await _Client.PostAsJsonAsync(_Client.BaseAddress + "/Post", career);
+          
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> UpdateCareer(CareerDTO career)
+        public async Task<bool> UpdateCareer(CareerDTO career)
         {
-            throw new NotImplementedException();
+            var response = await _Client.PutAsJsonAsync(_Client.BaseAddress + $"/Put/{career.CareerId}", career);
+
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> SaveHandle(CareerDTO career)
+        public async Task<bool> SaveHandle(CareerDTO career)
         {
-            throw new NotImplementedException();
+            if (career.CareerId > 0)
+                return await UpdateCareer(career);
+            else
+                return await InsertCareer(career);
         }
 
-        public Task<bool> DeleteCareer(int id)
+        public async Task<bool> DeleteCareer(int id)
         {
-            throw new NotImplementedException();
+            var response = await _Client.DeleteAsync(_Client.BaseAddress + $"/Delete/{id}");
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

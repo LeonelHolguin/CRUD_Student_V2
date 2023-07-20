@@ -32,5 +32,6 @@ namespace CRUDTwoApi.Shared
         public DateTime? RegisterDate { get; set; }
 
         public CareerDTO? Career { get; set; }
+        public IEnumerable<CareerDTO>? CareerList { get; set; }
     }
 }

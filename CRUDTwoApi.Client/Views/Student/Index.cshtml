@@ -1,0 +1,49 @@
+﻿@model List<CRUDTwoApi.Shared.StudentDTO>
+@{
+    ViewData["Title"] = "Student Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Students List</h1>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        Table of Students
+    </div>
+
+    <div class="card-body">
+        <a asp-action="Details" asp-controller="Student" asp-route-id="0" class="btn btn-success">New Student</a>
+        <hr />
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fist Name</th>
+                    <th>Last Name</th>
+                    <th>Career</th>
+                    <th>Admission Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td>@item.StudentFirstName</td>
+                        <td>@item.StudentLastName</td>
+                        <td>@item.Career!.CareerName</td>
+                        <td>@(String.Format("{0:dd/MM/yyyy}", item.StudentAdmissionDate))</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Student" asp-route-id="@item.StudentId" class="btn btn-primary">Edit</a>
+                            <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.StudentId" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
